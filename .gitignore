@@ -1,0 +1,16 @@
+# Java
+*.class
+*.log
+
+# NetBeans - ignorisi generisane fajlove
+**/nbproject/private/
+**/build/
+**/dist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
