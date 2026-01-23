@@ -4,16 +4,19 @@
  */
 package domen;
 
-import enums.TipTerapije;
+import enums.TipTerapijeEnum;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author gazda
  */
-public class Terapija {
+public class Terapija implements ApstraktniDomenskiObjekat{
     private int terapijaId;
     private String nazivTerapije;
-    private TipTerapije tipTerapije;
+    private TipTerapijeEnum tipTerapije;
     private String opis;
     private int trajanje;
     private String ucestalost;
@@ -21,7 +24,7 @@ public class Terapija {
     public Terapija() {
     }
 
-    public Terapija(int terapijaId, String nazivTerapije, TipTerapije tipTerapije, String opis, int trajanje, String ucestalost) {
+    public Terapija(int terapijaId, String nazivTerapije, TipTerapijeEnum tipTerapije, String opis, int trajanje, String ucestalost) {
         this.terapijaId = terapijaId;
         this.nazivTerapije = nazivTerapije;
         this.tipTerapije = tipTerapije;
@@ -54,11 +57,11 @@ public class Terapija {
         this.nazivTerapije = nazivTerapije;
     }
 
-    public TipTerapije getTipTerapije() {
+    public TipTerapijeEnum getTipTerapije() {
         return tipTerapije;
     }
 
-    public void setTipTerapije(TipTerapije tipTerapije) {
+    public void setTipTerapije(TipTerapijeEnum tipTerapije) {
         this.tipTerapije = tipTerapije;
     }
 
@@ -76,6 +79,69 @@ public class Terapija {
 
     public void setTrajanje(int trajanje) {
         this.trajanje = trajanje;
+    }
+
+    @Override
+    public String vratiNazivTabele() {
+        return "terapija";
+    }
+
+        @Override
+    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
+        List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            lista.add(vratiObjekatIzRs(rs));
+        }
+        return lista;
+    }
+
+    @Override
+    public String vratiKoloneZaUbacivanje() {
+        return "nazivTerapije, tipTerapije, opis, trajanje, ucestalost";
+    }
+
+    @Override
+    public String vratiVrednostiZaUbacivanje() {
+        return String.format("'%s', '%s', '%s', %d, '%s'", 
+                nazivTerapije, 
+                tipTerapije.toString(), 
+                opis, 
+                trajanje, 
+                ucestalost);
+    }
+
+    @Override
+    public String vratiPrimarniKljuc() {
+        return "terapijaId = " + terapijaId;
+    }
+
+    @Override
+    public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
+        Terapija t = new Terapija();
+        t.setTerapijaId(rs.getInt("terapijaId"));
+        t.setNazivTerapije(rs.getString("nazivTerapije"));
+
+        // Konverzija Stringa iz baze nazad u Enum
+        String tipStr = rs.getString("tipTerapije");
+        if (tipStr != null) {
+            t.setTipTerapije(TipTerapijeEnum.valueOf(tipStr));
+        }
+
+        t.setOpis(rs.getString("opis"));
+        t.setTrajanje(rs.getInt("trajanje"));
+        t.setUcestalost(rs.getString("ucestalost"));
+
+        return t;
+    }
+
+    @Override
+    public String vratiVrednostiZaIzmenu() {
+        return String.format("nazivTerapije='%s', tipTerapije='%s', opis='%s', trajanje=%d, ucestalost='%s'", 
+                nazivTerapije, 
+                tipTerapije.toString(), 
+                opis, 
+                trajanje, 
+                ucestalost);
     }
     
     

@@ -8,7 +8,7 @@ package enums;
  *
  * @author gazda
  */
-public enum TipTerapije {
+public enum TipTerapijeEnum {
     MEDIKAMENTOZNA,   
     FIZIKALNA,          
     HIRURSKA,           

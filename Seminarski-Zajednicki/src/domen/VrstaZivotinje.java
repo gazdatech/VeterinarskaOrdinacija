@@ -4,11 +4,17 @@
  */
 package domen;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author gazda
  */
-public class VrstaZivotinje {
+public class VrstaZivotinje implements ApstraktniDomenskiObjekat{
+
+    
     private int vrstaId;
     private String nazivVrste;
     private String latinskiNaziv;
@@ -54,6 +60,48 @@ public class VrstaZivotinje {
 
     public void setLatinskiNaziv(String latinskiNaziv) {
         this.latinskiNaziv = latinskiNaziv;
+    }
+
+    @Override
+    public String vratiNazivTabele() {
+        return "vrstazivotinja";
+    }
+
+    @Override
+    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
+        List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            lista.add(vratiObjekatIzRs(rs));
+        }
+        return lista;
+    }
+
+    @Override
+    public String vratiKoloneZaUbacivanje() {
+        return "nazivVrste";
+    }
+
+    @Override
+    public String vratiVrednostiZaUbacivanje() {
+        return String.format("'%s'", nazivVrste);
+    }
+
+    @Override
+    public String vratiPrimarniKljuc() {
+        return "vrstaId = " + vrstaId;
+    }
+
+    @Override
+    public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
+        VrstaZivotinje vz = new VrstaZivotinje();
+        vz.setVrstaId(rs.getInt("vrstaId"));
+        vz.setNazivVrste(rs.getString("nazivVrste"));
+        return vz;
+    }
+
+    @Override
+    public String vratiVrednostiZaIzmenu() {
+        return String.format("nazivVrste='%s'", nazivVrste);
     }
     
     

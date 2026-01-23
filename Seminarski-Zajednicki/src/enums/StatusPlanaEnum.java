@@ -8,7 +8,7 @@ package enums;
  *
  * @author gazda
  */
-public enum StatusPlana {
+public enum StatusPlanaEnum {
     U_TOKU,
     ZAVRSEN,
     PREKINUT;

@@ -8,7 +8,7 @@ package enums;
  *
  * @author gazda
  */
-public enum StepenObrazovanja {
+public enum StepenObrazovanjaEnum {
     SREDNJA_STRUCNA_SPREMA,
     VISOKA_STRUCNA_SPREMA,
     MASTER,

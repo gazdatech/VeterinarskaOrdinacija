@@ -5,6 +5,7 @@
 package domen;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,10 @@ public class IstorijaOporavka implements ApstraktniDomenskiObjekat {
         return datumZapisa;
     }
 
+    public void setDatumZapisa(Date datumZapisa) {
+        this.datumZapisa = datumZapisa;
+    }
+    
     public void setDatumOporavka(Date datumZapisa) {
         this.datumZapisa = datumZapisa;
     }
@@ -72,37 +77,51 @@ public class IstorijaOporavka implements ApstraktniDomenskiObjekat {
 
     @Override
     public String vratiNazivTabele() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "istorijaoporavka";
     }
 
     @Override
     public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            lista.add(vratiObjekatIzRs(rs));
+        }
+        return lista;
     }
 
     @Override
     public String vratiKoloneZaUbacivanje() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "zivotinjaId, datumZapisa, opisStanja, zavrsenOporavak";
     }
 
     @Override
     public String vratiVrednostiZaUbacivanje() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return String.format("%d, '%s', '%s', %b", 
+            zivotinja.getZivotinjaId(), 
+            new java.sql.Date(datumZapisa.getTime()), opisStanja, zavrsenOporavak); 
     }
 
     @Override
     public String vratiPrimarniKljuc() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "istorijaId = " + istorijaId;
     }
 
     @Override
     public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        IstorijaOporavka io = new IstorijaOporavka();
+        io.setIstorijaId(rs.getInt("istorijaId"));
+        Zivotinja z = new Zivotinja();
+        z.setZivotinjaId(rs.getInt("zivotinjaId"));
+        io.setZivotinja(z);
+        io.setDatumZapisa(new java.util.Date(rs.getDate("datumZapisa").getTime()));
+        io.setOpisStanja(rs.getString("opisStanja"));
+        io.setZavrsenOporavak(rs.getBoolean("zavrsenOporavak"));
+        return io;
     }
 
     @Override
     public String vratiVrednostiZaIzmenu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return String.format("zivotinjaId=%d, datumZapisa='%s', opisStanja='%s', zavrsenOporavak=%b",zivotinja.getZivotinjaId(), new java.sql.Date(datumZapisa.getTime()), opisStanja, zavrsenOporavak);
     }
     
     

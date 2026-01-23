@@ -4,11 +4,15 @@
  */
 package domen;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author gazda
  */
-public class Veterinar {
+public class Veterinar implements ApstraktniDomenskiObjekat{
     private int veterinarId;
     private String ime;
     private String prezime;
@@ -94,6 +98,61 @@ public class Veterinar {
 
     public void setBrojTelefona(String brojTelefona) {
         this.brojTelefona = brojTelefona;
+    }
+
+    @Override
+    public String vratiNazivTabele() {
+        return "veterinar";
+    }
+
+    @Override
+    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
+        List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            lista.add(vratiObjekatIzRs(rs));
+        }
+        return lista;
+    }
+
+    @Override
+    public String vratiKoloneZaUbacivanje() {
+        return "ime, prezime, specijalizacija, stepenId";
+    }
+
+    @Override
+    public String vratiVrednostiZaUbacivanje() {
+        return String.format("'%s', '%s', %d", 
+                ime, 
+                prezime, 
+                stepenObrazovanja.getStepenId());
+    }
+
+    @Override
+    public String vratiPrimarniKljuc() {
+        return "veterinarId = " + veterinarId;
+    }
+
+    @Override
+    public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
+        Veterinar v = new Veterinar();
+        v.setVeterinarId(rs.getInt("veterinarId"));
+        v.setIme(rs.getString("ime"));
+        v.setPrezime(rs.getString("prezime"));
+
+        // Kreiramo "šuplji" objekat stepena obrazovanja sa ID-em iz baze
+        StepenObrazovanja so = new StepenObrazovanja();
+        so.setStepenId(rs.getInt("stepenId"));
+        v.setStepenObrazovanja(so);
+
+        return v;
+    }
+
+    @Override
+    public String vratiVrednostiZaIzmenu() {
+        return String.format("ime='%s', prezime='%s', stepenId=%d", 
+                ime, 
+                prezime, 
+                stepenObrazovanja.getStepenId());
     }
     
 }

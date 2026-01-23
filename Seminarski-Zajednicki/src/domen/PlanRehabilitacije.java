@@ -4,7 +4,9 @@
  */
 package domen;
 
-import enums.StatusPlana;
+import enums.StatusPlanaEnum;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,20 +14,21 @@ import java.util.List;
  *
  * @author gazda
  */
-public class PlanRehabilitacije {
+public class PlanRehabilitacije implements ApstraktniDomenskiObjekat{
     private int planId;
     private Date datumPocetka;
     private Date datumZavrsetka;
     private String opisPlana;
     private Veterinar veterinar;
     private Zivotinja zivotinja;
-    private StatusPlana status;
+    private StatusPlanaEnum status;
     private List<Tretman> tretmani;
 
     public PlanRehabilitacije() {
+        
     }
 
-    public PlanRehabilitacije(int planId, Date datumPocetka, Date datumZavrsetka, String opisPlana, Veterinar veterinar, Zivotinja zivotinja, StatusPlana status, List<Tretman> tretmani) {
+    public PlanRehabilitacije(int planId, Date datumPocetka, Date datumZavrsetka, String opisPlana, Veterinar veterinar, Zivotinja zivotinja, StatusPlanaEnum status, List<Tretman> tretmani) {
         this.planId = planId;
         this.datumPocetka = datumPocetka;
         this.datumZavrsetka = datumZavrsetka;
@@ -38,11 +41,11 @@ public class PlanRehabilitacije {
 
     
 
-    public StatusPlana getStatus() {
+    public StatusPlanaEnum getStatus() {
         return status;
     }
 
-    public void setStatus(StatusPlana status) {
+    public void setStatus(StatusPlanaEnum status) {
         this.status = status;
     }
 
@@ -102,6 +105,80 @@ public class PlanRehabilitacije {
 
     public void setTretmani(List<Tretman> tretmani) {
         this.tretmani = tretmani;
+    }
+
+    @Override
+    public String vratiNazivTabele() {
+        return "planrehabilitacije";
+    }
+
+    @Override
+    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
+        List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            lista.add(vratiObjekatIzRs(rs));
+        }
+        return lista;
+    }
+
+        @Override
+    public String vratiKoloneZaUbacivanje() {
+        // Ovde navodimo kolone bez primarnog ključa (ako je Auto Increment)
+        return "datumPocetka, datumZavrsetka, opisPlana, veterinarId, zivotinjaId, status";
+    }
+
+    @Override
+    public String vratiVrednostiZaUbacivanje() {
+        return String.format("'%s', '%s', '%s', %d, %d, '%s'", 
+                new java.sql.Date(datumPocetka.getTime()), 
+                new java.sql.Date(datumZavrsetka.getTime()), 
+                opisPlana, 
+                veterinar.getVeterinarId(), 
+                zivotinja.getZivotinjaId(), 
+                status.toString());
+    }
+
+    @Override
+    public String vratiPrimarniKljuc() {
+        return "planId = " + planId;
+    }
+
+    @Override
+    public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
+        PlanRehabilitacije pr = new PlanRehabilitacije();
+        pr.setPlanId(rs.getInt("planId"));
+        pr.setDatumPocetka(new java.util.Date(rs.getDate("datumPocetka").getTime()));
+        pr.setDatumZavrsetka(new java.util.Date(rs.getDate("datumZavrsetka").getTime()));
+        pr.setOpisPlana(rs.getString("opisPlana"));
+
+        // Kreiramo "ljuske" objekata sa ID-evima
+        Veterinar v = new Veterinar();
+        v.setVeterinarId(rs.getInt("veterinarId"));
+        pr.setVeterinar(v);
+
+        Zivotinja z = new Zivotinja();
+        z.setZivotinjaId(rs.getInt("zivotinjaId"));
+        pr.setZivotinja(z);
+
+        // Mapiranje Enuma iz Stringa
+        pr.setStatus(StatusPlanaEnum.valueOf(rs.getString("status")));
+
+        // Napomena: Lista tretmana ostaje prazna ovde! 
+        // Ona se puni u posebnom koraku u kontroleru/servisu pozivom za tabelu Tretman.
+
+        return pr;
+    }
+
+    @Override
+    public String vratiVrednostiZaIzmenu() {
+        return String.format("datumPocetka='%s', datumZavrsetka='%s', opisPlana='%s', "
+                + "veterinarId=%d, zivotinjaId=%d, status='%s'", 
+                new java.sql.Date(datumPocetka.getTime()), 
+                new java.sql.Date(datumZavrsetka.getTime()), 
+                opisPlana, 
+                veterinar.getVeterinarId(), 
+                zivotinja.getZivotinjaId(), 
+                status.toString());
     }
 
     

@@ -5,12 +5,15 @@
 package domen;
 
 import enums.Pol;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author gazda
  */
-public class Zivotinja {
+public class Zivotinja implements ApstraktniDomenskiObjekat{
     private int zivotinjaId;
     private String ime;
     private Pol pol;
@@ -76,6 +79,64 @@ public class Zivotinja {
 
     public void setTezinaKg(double tezinaKg) {
         this.tezinaKg = tezinaKg;
+    }
+
+    @Override
+    public String vratiNazivTabele() {
+        return "zivotinja";
+    }
+
+    @Override
+    public List<ApstraktniDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
+        List<ApstraktniDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            lista.add(vratiObjekatIzRs(rs));
+        }
+        return lista;
+    }
+
+    @Override
+    public String vratiKoloneZaUbacivanje() {
+        return "ime, pol, starost, tezinaKg, vrstaZivotinjeId";
+    }
+
+    @Override
+    public String vratiVrednostiZaUbacivanje() {
+        return "'" + ime + "', " +
+               "'" + pol.name() + "', " +
+               starost + ", " +
+               tezinaKg + ", " +
+               "'" + vrstaZivotinje.getVrstaId()+ "'";
+    }
+
+    @Override
+    public String vratiPrimarniKljuc() {
+        return "zivotinjaId=" + zivotinjaId;
+    }
+
+    @Override
+    public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
+        Zivotinja z = new Zivotinja();
+
+        z.setZivotinjaId(rs.getInt("zivotinjaId"));
+        z.setIme(rs.getString("ime"));
+        z.setPol(Pol.valueOf(rs.getString("pol")));
+        z.setStarost(rs.getInt("starost"));
+        z.setTezinaKg(rs.getDouble("tezinaKg"));
+        VrstaZivotinje zv = new VrstaZivotinje();
+        zv.setVrstaId(rs.getInt("vrstaZivotinjeId"));
+        z.setVrstaZivotinje(zv);
+
+        return z;
+    }
+
+    @Override
+    public String vratiVrednostiZaIzmenu() {
+        return "ime='" + ime + "', " +
+               "pol='" + pol.name() + "', " +
+               "starost=" + starost + ", " +
+               "tezinaKg=" + tezinaKg + ", " +
+               "vrstaZivotinjeId='" + vrstaZivotinje.getVrstaId()+ "'";
     }
     
     
