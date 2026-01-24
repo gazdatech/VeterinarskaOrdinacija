@@ -28,20 +28,26 @@ public class LoginOperacija extends ApstraktnaGenerickaOperacija {
 
     @Override
     protected void preduslovi(Object objekat) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (!(objekat instanceof Veterinar)) {
+        throw new Exception("Sistem nije poslao validne podatke za veterinara!");
+    }
     }
 
-    @Override
     protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
+        Veterinar klijentVeterinar = (Veterinar) objekat; // Kastujemo ulazni objekat
         List<Veterinar> sviVeterinari = broker.getAll(objekat, null);
-        System.out.println("Login operacija SO" +sviVeterinari);
+
         for(Veterinar v : sviVeterinari) {
-            if(v.equals(objekat)) {
-                veterinar = v;
-                return;
+    // Provera da li su polja u bazi slucajno null da ne bi opet puklo
+            if(v.getKorisnickoIme() != null && v.getLozinka() != null) {
+                if(v.getKorisnickoIme().equals(klijentVeterinar.getKorisnickoIme()) && 
+                   v.getLozinka().equals(klijentVeterinar.getLozinka())) {
+                    this.veterinar = v;
+                    return;
+                }
             }
         }
-        veterinar = null;
+        this.veterinar = null;
     }
     
 }

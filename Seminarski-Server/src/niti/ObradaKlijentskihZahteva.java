@@ -43,8 +43,19 @@ public class ObradaKlijentskihZahteva extends Thread {
                 switch(zahtev.getOperacija()) {
                     case LOGIN:
                         Veterinar v = (Veterinar) zahtev.getParametar();
-                        v =Controller.getInstance().login(v);
+                        v = Controller.getInstance().login(v);
                         odgovor.setOdgovor(v);
+                        if (v == null) {
+                            // Samo šaljemo odgovor da je v null (neuspeh)
+                            // NE zatvaramo soket i NE prekidamo nit
+                            posiljalac.posalji(odgovor);
+                            System.out.println("Pokušaj prijave neuspešan. Čekam novi pokušaj...");
+                        } else {
+                            // Tek ovde, kada je v != null, ispisujemo ko se povezao
+                            odgovor.setOdgovor(v);
+                            posiljalac.posalji(odgovor);
+                            System.out.println("KLIJENT SE POVEZAO: " + v.getIme() + " " + v.getPrezime());
+                        }
                         break;
                     default:
                         System.out.println("GRESKA");

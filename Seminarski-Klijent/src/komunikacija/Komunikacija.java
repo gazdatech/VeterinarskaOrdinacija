@@ -40,21 +40,27 @@ public class Komunikacija {
         }
     }
 
-    public Veterinar login(String user, String password) throws IOException {
+    public Veterinar login(String user, String password) throws Exception {
+        // 1. Kreiraš zahtev
+        Zahtev zahtev = new Zahtev();
         Veterinar v = new Veterinar();
         v.setKorisnickoIme(user);
         v.setLozinka(password);
-        Zahtev zahtev = new Zahtev(Operacija.LOGIN, v);
-        
-        posiljalac.posalji(v);
-        
-        try {
-            Odgovor odg = (Odgovor) primalac.primi();
-            v = (Veterinar) odg.getOdgovor();
-        } catch (Exception ex) {
-            Logger.getLogger(Komunikacija.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return v;
+        // 2. Postaviš operaciju (proveri da li se enum zove LOGIN)
+        zahtev.setOperacija(Operacija.LOGIN); 
+
+        // 3. Ubaciš veterinara kao parametar zahteva
+        zahtev.setParametar(v);
+
+        // 4. Šalješ ZAHTEV (ovo je ključno, pre si slao samo 'v')
+        posiljalac.posalji(zahtev); 
+
+        // 5. Primis odgovor od servera
+        // Ovde moraš da primiš Odgovor jer tvoj server šalje Odgovor
+        Odgovor odgovor = (Odgovor) primalac.primi();
+
+        // 6. Iz odgovora izvlačiš rezultat i kastuješ ga nazad u Veterinar
+        return (Veterinar) odgovor.getOdgovor();
     }
     
     

@@ -5,6 +5,7 @@
 package kontroleri;
 
 import domen.Veterinar;
+import forme.GlavnaForma;
 import forme.LoginForm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,20 +36,19 @@ public class LoginController {
             }
 
             private void prijava(ActionEvent e) {
-                Veterinar v;
-                String user = lf.getjTextField1().getText().trim();
-                String password = new String(lf.getjPasswordField1().getPassword());
-                
-                Komunikacija.getInstance().konekcija();
                 try {
+                    Veterinar v;
+                    String user = lf.getjTextField1().getText().trim();
+                    String password = new String(lf.getjPasswordField1().getPassword());
+                    Komunikacija.getInstance().konekcija();
+                    
                     v = Komunikacija.getInstance().login(user,password);
                     if(v == null) {
                         JOptionPane.showMessageDialog(lf,"Prijava na sistem nije uspesna!", "Nespeh", JOptionPane.ERROR_MESSAGE);
                     }else {
                         JOptionPane.showMessageDialog(lf,"Prijava na sistem uspesna!", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-                        lf.dispose();
                     }
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

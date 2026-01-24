@@ -139,9 +139,13 @@ public class Veterinar implements ApstraktniDomenskiObjekat{
         v.setIme(rs.getString("ime"));
         v.setPrezime(rs.getString("prezime"));
 
-        // Kreiramo "šuplji" objekat stepena obrazovanja sa ID-em iz baze
+        // OVE LINIJE TI NEDOSTAJU:
+        // Proveri da li se u bazi kolone zovu bas ovako (mozda je username/password?)
+        v.setKorisnickoIme(rs.getString("korisnickoIme")); 
+        v.setLozinka(rs.getString("lozinka"));
+
         StepenObrazovanja so = new StepenObrazovanja();
-        so.setStepenId(rs.getInt("stepenId"));
+        so.setStepenId(rs.getInt("stepenId")); // Ovo smo vec popravili
         v.setStepenObrazovanja(so);
 
         return v;

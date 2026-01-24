@@ -16,18 +16,7 @@ public class DbConnectionFactory { // klasicna konekcija
     private static DbConnectionFactory instance;
     private Connection connection;
     
-    private DbConnectionFactory() { 
-        try {
-            if(connection== null || connection.isClosed()) {
-                String url = Konfiguracija.getInstanca().getProperty("url");
-                String username = Konfiguracija.getInstanca().getProperty("username");
-                String password = Konfiguracija.getInstanca().getProperty("password");
-                connection = DriverManager.getConnection(url, username, password);
-                connection.setAutoCommit(false);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DbConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private DbConnectionFactory() {   
     }
 
     public static DbConnectionFactory getInstance() {
@@ -37,11 +26,18 @@ public class DbConnectionFactory { // klasicna konekcija
         return instance;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            String url = Konfiguracija.getInstanca().getProperty("url");
+            String username = Konfiguracija.getInstanca().getProperty("username");
+            String password = Konfiguracija.getInstanca().getProperty("password");
+            
+            connection = DriverManager.getConnection(url, username, password);
+            connection.setAutoCommit(false);
+            System.out.println("Nova konekcija sa bazom je uspesno otvorena.");
+        }
         return connection;
+        }
     }
-    
-    
-    
-    
-}
+ 
+  

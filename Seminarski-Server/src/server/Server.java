@@ -27,20 +27,21 @@ public class Server extends Thread {
         klijenti = new LinkedList<>();
     }
 
-    @Override
     public void run() {
         try {
             serverSoket = new ServerSocket(9000);
+            System.out.println("Server je pokrenut i ceka klijente...");
             while(!kraj) {
-                Socket s= serverSoket.accept();
-                System.out.println("Klijent je povezan");
-                
+                Socket s = serverSoket.accept();
+                // Umesto "Klijent je povezan", ispiši nešto neutralnije
+                System.out.println("Novi klijent na portu " + s.getPort() + " pokusava da se poveze...");
+
                 ObradaKlijentskihZahteva okz = new ObradaKlijentskihZahteva(s);
                 klijenti.add(okz);
                 okz.start();
             }
-        }catch(IOException ex) {
-            ex.printStackTrace();
+        } catch(IOException ex) {
+            if (!kraj) ex.printStackTrace();
         }
     }
     
