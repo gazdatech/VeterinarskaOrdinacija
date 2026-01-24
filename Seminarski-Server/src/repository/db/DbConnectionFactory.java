@@ -17,8 +17,6 @@ public class DbConnectionFactory { // klasicna konekcija
     private Connection connection;
     
     private DbConnectionFactory() { 
-        
-        
         try {
             if(connection== null || connection.isClosed()) {
                 String url = Konfiguracija.getInstanca().getProperty("url");

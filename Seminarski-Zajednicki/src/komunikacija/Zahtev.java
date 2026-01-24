@@ -18,10 +18,9 @@ public class Zahtev implements Serializable {
     public Zahtev() {
     }
 
-    public Zahtev(int operacija, Object parametar, boolean signal) {
+    public Zahtev(int operacija, Object parametar) {
         this.operacija = operacija;
         this.parametar = parametar;
-        this.signal = signal;
     }
 
     

@@ -12,51 +12,24 @@ import java.io.Serializable;
  * @author gazda
  */
 public class Odgovor implements Serializable {
-    private Object parametar;
-    private int operacija;
-    private String poruka;
-    private VrstaOdgovora vrstaOdgovora;
+    private Object odgovor;
 
     public Odgovor() {
     }
 
-    public Odgovor(Object parametar, int operacija, String poruka, VrstaOdgovora vrstaOdgovora) {
-        this.parametar = parametar;
-        this.operacija = operacija;
-        this.poruka = poruka;
-        this.vrstaOdgovora = vrstaOdgovora;
+    public Odgovor(Object odgovor) {
+        this.odgovor = odgovor;
     }
 
-    public Object getParametar() {
-        return parametar;
+    public Object getOdgovor() {
+        return odgovor;
     }
 
-    public void setParametar(Object parametar) {
-        this.parametar = parametar;
+    public void setOdgovor(Object odgovor) {
+        this.odgovor = odgovor;
     }
 
-    public int getOperacija() {
-        return operacija;
-    }
-
-    public void setOperacija(int operacija) {
-        this.operacija = operacija;
-    }
-
-    public String getPoruka() {
-        return poruka;
-    }
-
-    public void setPoruka(String poruka) {
-        this.poruka = poruka;
-    }
-
-    public VrstaOdgovora getVrstaOdgovora() {
-        return vrstaOdgovora;
-    }
-
-    public void setVrstaOdgovora(VrstaOdgovora vrstaOdgovora) {
-        this.vrstaOdgovora = vrstaOdgovora;
-    }
+    
+    
     
 }
