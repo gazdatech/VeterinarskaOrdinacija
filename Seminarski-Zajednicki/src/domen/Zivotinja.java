@@ -19,20 +19,23 @@ public class Zivotinja implements ApstraktniDomenskiObjekat{
     private Pol pol;
     private int starost;
     private double tezinaKg;
+    private String brojCipa;
     private VrstaZivotinje vrstaZivotinje;
 
     public Zivotinja() {
     }
 
-    public Zivotinja(int zivotinjaId, String ime, Pol pol, int starost, double tezinaKg, VrstaZivotinje vrstaZivotinje) {
+    public Zivotinja(int zivotinjaId, String ime, Pol pol, int starost, double tezinaKg, String brojCipa, VrstaZivotinje vrstaZivotinje) {
         this.zivotinjaId = zivotinjaId;
         this.ime = ime;
         this.pol = pol;
         this.starost = starost;
         this.tezinaKg = tezinaKg;
+        this.brojCipa = brojCipa;
         this.vrstaZivotinje = vrstaZivotinje;
     }
 
+    
     public VrstaZivotinje getVrstaZivotinje() {
         return vrstaZivotinje;
     }
@@ -81,6 +84,15 @@ public class Zivotinja implements ApstraktniDomenskiObjekat{
         this.tezinaKg = tezinaKg;
     }
 
+    public void setbrojCipa(String brojCipa) {
+        this.brojCipa = brojCipa;
+    }
+
+    public String getBrojCipa() {
+        return brojCipa;
+    }
+
+    
     @Override
     public String vratiNazivTabele() {
         return "zivotinja";
@@ -97,16 +109,17 @@ public class Zivotinja implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vratiKoloneZaUbacivanje() {
-        return "ime, pol, starost, tezinaKg, vrstaZivotinjeId";
+        return "ime, pol, starost, tezinaKg, brojCipa, vrstaZivotinjeId";
     }
 
     @Override
     public String vratiVrednostiZaUbacivanje() {
         return "'" + ime + "', " +
-               "'" + pol.name() + "', " +
+               "'" + pol.toString() + "', " +
                starost + ", " +
                tezinaKg + ", " +
-               "'" + vrstaZivotinje.getVrstaId()+ "'";
+               "'" + brojCipa + "', " +
+               vrstaZivotinje.getVrstaId();
     }
 
     @Override
@@ -114,7 +127,7 @@ public class Zivotinja implements ApstraktniDomenskiObjekat{
         return "zivotinjaId=" + zivotinjaId;
     }
 
-    @Override
+     @Override
     public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
         Zivotinja z = new Zivotinja();
 
@@ -123,9 +136,11 @@ public class Zivotinja implements ApstraktniDomenskiObjekat{
         z.setPol(Pol.valueOf(rs.getString("pol")));
         z.setStarost(rs.getInt("starost"));
         z.setTezinaKg(rs.getDouble("tezinaKg"));
-        VrstaZivotinje zv = new VrstaZivotinje();
-        zv.setVrstaId(rs.getInt("vrstaZivotinjeId"));
-        z.setVrstaZivotinje(zv);
+        z.setbrojCipa(rs.getString("brojCipa"));
+
+        VrstaZivotinje vz = new VrstaZivotinje();
+        vz.setVrstaId(rs.getInt("vrstaZivotinjeId"));
+        z.setVrstaZivotinje(vz);
 
         return z;
     }
@@ -136,8 +151,10 @@ public class Zivotinja implements ApstraktniDomenskiObjekat{
                "pol='" + pol.name() + "', " +
                "starost=" + starost + ", " +
                "tezinaKg=" + tezinaKg + ", " +
-               "vrstaZivotinjeId='" + vrstaZivotinje.getVrstaId()+ "'";
+               "brojCipa='" + brojCipa + "', " +
+               "vrstaZivotinjeId=" + vrstaZivotinje.getVrstaId();
     }
+    
     
     
 }

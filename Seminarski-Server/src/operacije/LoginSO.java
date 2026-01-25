@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author gazda
  */
-public class LoginOperacija extends ApstraktnaGenerickaOperacija {
+public class LoginSO extends ApstraktnaGenerickaOperacija {
     
     Veterinar veterinar;
 

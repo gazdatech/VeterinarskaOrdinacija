@@ -5,7 +5,10 @@
 package controller;
 
 import domen.Veterinar;
-import operacije.LoginOperacija;
+import domen.Zivotinja;
+import java.util.List;
+import operacije.LoginSO;
+import operacije.UcitajSveZivotinjeSO;
 
 /**
  *
@@ -25,10 +28,17 @@ public class Controller {
     }
     
     public Veterinar login(Veterinar v) throws Exception {
-        LoginOperacija lo = new LoginOperacija();
+        LoginSO lo = new LoginSO();
         lo.izvrsi(v, null);
         System.out.println("Klasa kontroler : " + lo.getVeterinar());
         return lo.getVeterinar();
     }
     
+    public List<Zivotinja> vratiSveZivotinje() throws Exception {
+        UcitajSveZivotinjeSO so = new UcitajSveZivotinjeSO();
+        so.izvrsi(new Zivotinja(), null);
+        return so.getLista();
+    }
+    
 }
+    

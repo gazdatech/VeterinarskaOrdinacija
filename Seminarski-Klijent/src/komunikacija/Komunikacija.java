@@ -5,8 +5,10 @@
 package komunikacija;
 
 import domen.Veterinar;
+import domen.Zivotinja;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,6 +63,13 @@ public class Komunikacija {
 
         // 6. Iz odgovora izvlačiš rezultat i kastuješ ga nazad u Veterinar
         return (Veterinar) odgovor.getOdgovor();
+    }
+
+    public List<Zivotinja> vratiSveZivotinje() throws Exception {
+       Zahtev zahtev = new Zahtev(Operacija.VRATI_SVE_ZIVOTINJE,null);
+       posiljalac.posalji(zahtev);
+       Odgovor odgovor = (Odgovor) primalac.primi();
+       return (List<Zivotinja>) odgovor.getOdgovor();
     }
     
     

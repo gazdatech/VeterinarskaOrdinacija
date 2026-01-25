@@ -45,8 +45,12 @@ public class LoginController {
                     v = Komunikacija.getInstance().login(user,password);
                     if(v == null) {
                         JOptionPane.showMessageDialog(lf,"Prijava na sistem nije uspesna!", "Nespeh", JOptionPane.ERROR_MESSAGE);
+                        
                     }else {
                         JOptionPane.showMessageDialog(lf,"Prijava na sistem uspesna!", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+                        GlavnaForma gf = new GlavnaForma();
+                        gf.setVisible(true);
+                        lf.dispose();
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
