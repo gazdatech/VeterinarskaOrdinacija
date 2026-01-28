@@ -5,9 +5,11 @@
 package controller;
 
 import domen.Veterinar;
+import domen.VrstaZivotinje;
 import domen.Zivotinja;
 import java.util.List;
 import operacije.LoginSO;
+import operacije.UcitajSveVrsteSO;
 import operacije.UcitajSveZivotinjeSO;
 
 /**
@@ -38,6 +40,12 @@ public class Controller {
         UcitajSveZivotinjeSO so = new UcitajSveZivotinjeSO();
         so.izvrsi(new Zivotinja(), null);
         return so.getLista();
+    }
+
+    public List<VrstaZivotinje> vratiSveVrste() throws Exception {
+       UcitajSveVrsteSO so = new UcitajSveVrsteSO();
+       so.izvrsi(new VrstaZivotinje(), null);
+       return so.getListaVrste();
     }
     
 }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import kordinator.Kordinator;
 import komunikacija.Komunikacija;
 
 /**
@@ -47,9 +48,9 @@ public class LoginController {
                         JOptionPane.showMessageDialog(lf,"Prijava na sistem nije uspesna!", "Nespeh", JOptionPane.ERROR_MESSAGE);
                         
                     }else {
+                        Kordinator.getInstance().setUlogovani(v);
                         JOptionPane.showMessageDialog(lf,"Prijava na sistem uspesna!", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
-                        GlavnaForma gf = new GlavnaForma();
-                        gf.setVisible(true);
+                        Kordinator.getInstance().otvoriGlavnuFormu();
                         lf.dispose();
                     }
                 } catch (Exception ex) {

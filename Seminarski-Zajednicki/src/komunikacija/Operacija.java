@@ -13,4 +13,5 @@ import java.io.Serializable;
 public class Operacija {
     public final static int LOGIN = 1;
     public final static int VRATI_SVE_ZIVOTINJE = 2;
+    public final static int VRATI_SVE_VRSTE = 3;
 }

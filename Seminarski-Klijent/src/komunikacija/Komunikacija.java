@@ -5,6 +5,7 @@
 package komunikacija;
 
 import domen.Veterinar;
+import domen.VrstaZivotinje;
 import domen.Zivotinja;
 import java.io.IOException;
 import java.net.Socket;
@@ -70,6 +71,13 @@ public class Komunikacija {
        posiljalac.posalji(zahtev);
        Odgovor odgovor = (Odgovor) primalac.primi();
        return (List<Zivotinja>) odgovor.getOdgovor();
+    }
+
+    public List<VrstaZivotinje> vratiSveVrsteZivotinja() throws Exception {
+        Zahtev zahtev = new Zahtev(Operacija.VRATI_SVE_VRSTE,null);
+        posiljalac.posalji(zahtev);
+        Odgovor odgovor = (Odgovor) primalac.primi();
+        return (List<VrstaZivotinje>) odgovor.getOdgovor();
     }
     
     

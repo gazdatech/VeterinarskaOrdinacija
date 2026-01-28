@@ -4,7 +4,12 @@
  */
 package kordinator;
 
+import domen.Veterinar;
+import forme.DodajZivotinjuForma;
+import forme.GlavnaForma;
 import forme.LoginForm;
+import kontroleri.DodajZivotinjuController;
+import kontroleri.GlavnaFormaController;
 import kontroleri.LoginController;
 
 /**
@@ -13,7 +18,10 @@ import kontroleri.LoginController;
  */
 public class Kordinator {
     private static Kordinator instance;
+    private Veterinar ulogovani;
     private LoginController loginController;
+    private GlavnaFormaController gfController;
+    private DodajZivotinjuController dzController;
     private Kordinator() {
         
     }
@@ -30,5 +38,25 @@ public class Kordinator {
         loginController = new LoginController(new LoginForm());
         loginController.otvoriFormu();
     }
+
+    public Veterinar getUlogovani() {
+        return ulogovani;
+    }
+
+    public void setUlogovani(Veterinar ulogovani) {
+        this.ulogovani = ulogovani;
+    }
+
+    public void otvoriGlavnuFormu() throws Exception {
+        gfController = new GlavnaFormaController(new GlavnaForma());
+        gfController.otvoriFormu();
+    }
+    
+    public void otvoriDodajZivotinjuFormu() throws Exception {
+        dzController = new DodajZivotinjuController(new DodajZivotinjuForma());
+        dzController.otvoriFormu();
+    }
+    
+    
     
 }

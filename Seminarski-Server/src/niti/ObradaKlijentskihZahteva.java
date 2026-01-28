@@ -6,6 +6,7 @@ package niti;
 
 import controller.Controller;
 import domen.Veterinar;
+import domen.VrstaZivotinje;
 import domen.Zivotinja;
 import java.io.IOException;
 import java.net.Socket;
@@ -53,6 +54,10 @@ public class ObradaKlijentskihZahteva extends Thread {
                     case VRATI_SVE_ZIVOTINJE:
                         List<Zivotinja> lista = Controller.getInstance().vratiSveZivotinje();
                         odgovor.setOdgovor(lista);
+                        break;
+                    case VRATI_SVE_VRSTE:
+                        List<VrstaZivotinje> listaVrste = Controller.getInstance().vratiSveVrste();
+                        odgovor.setOdgovor(listaVrste);
                         break;
                 }
                 // KLJUČNO: Samo jedno slanje na samom kraju switch-a

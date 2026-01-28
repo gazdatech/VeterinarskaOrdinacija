@@ -140,6 +140,7 @@ public class Zivotinja implements ApstraktniDomenskiObjekat{
 
         VrstaZivotinje vz = new VrstaZivotinje();
         vz.setVrstaId(rs.getInt("vrstaZivotinjeId"));
+        vz.setNazivVrste(rs.getString("naziv_vrste"));
         z.setVrstaZivotinje(vz);
 
         return z;

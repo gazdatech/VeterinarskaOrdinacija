@@ -64,7 +64,7 @@ public class VrstaZivotinje implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vratiNazivTabele() {
-        return "vrstazivotinja";
+        return "vrstazivotinje";
     }
 
     @Override
@@ -78,7 +78,7 @@ public class VrstaZivotinje implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vratiKoloneZaUbacivanje() {
-        return "nazivVrste";
+        return "naziv_vrste";
     }
 
     @Override
@@ -88,20 +88,20 @@ public class VrstaZivotinje implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vratiPrimarniKljuc() {
-        return "vrstaId = " + vrstaId;
+        return "vrsta_id = " + vrstaId;
     }
 
     @Override
     public ApstraktniDomenskiObjekat vratiObjekatIzRs(ResultSet rs) throws Exception {
         VrstaZivotinje vz = new VrstaZivotinje();
-        vz.setVrstaId(rs.getInt("vrstaId"));
-        vz.setNazivVrste(rs.getString("nazivVrste"));
+        vz.setVrstaId(rs.getInt("vrsta_id"));
+        vz.setNazivVrste(rs.getString("naziv_vrste"));
         return vz;
     }
 
     @Override
     public String vratiVrednostiZaIzmenu() {
-        return String.format("nazivVrste='%s'", nazivVrste);
+        return String.format("naziv_vrste='%s'", nazivVrste);
     }
     
     

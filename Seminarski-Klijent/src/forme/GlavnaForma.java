@@ -5,8 +5,13 @@
 package forme;
 
 import domen.Zivotinja;
+import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import komunikacija.Komunikacija;
 import modeli.ModelTabeleZivotinja;
 
@@ -21,7 +26,6 @@ public class GlavnaForma extends javax.swing.JFrame {
      */
     public GlavnaForma() {
         initComponents();
-        osveziTabelu();
     }
 
     /**
@@ -42,7 +46,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         btnIzmeni = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuDodaj = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -81,13 +85,13 @@ public class GlavnaForma extends javax.swing.JFrame {
 
         jMenu1.setText("Zivotinja");
 
-        jMenuItem1.setText("dodaj");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuDodaj.setText("dodaj");
+        menuDodaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuDodajActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(menuDodaj);
 
         jMenuItem2.setText("pregled");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -130,7 +134,7 @@ public class GlavnaForma extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelUlogovani, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -167,9 +171,13 @@ public class GlavnaForma extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void menuDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDodajActionPerformed
+        try {
+            kordinator.Kordinator.getInstance().otvoriDodajZivotinjuFormu();
+        } catch (Exception ex) {
+            Logger.getLogger(GlavnaForma.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuDodajActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
@@ -179,40 +187,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GlavnaForma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GlavnaForma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GlavnaForma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GlavnaForma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GlavnaForma().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetalji;
@@ -224,25 +199,29 @@ public class GlavnaForma extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem menuDodaj;
     private javax.swing.JTable tabelaZivotinja;
     // End of variables declaration//GEN-END:variables
 
-    private void osveziTabelu() {
-        try {
-        // Pozivamo kontroler/komunikaciju da povuče listu
-        List<Zivotinja> sveZivotinje = Komunikacija.getInstance().vratiSveZivotinje();
-        ModelTabeleZivotinja model = new ModelTabeleZivotinja(sveZivotinje);
-        tabelaZivotinja.setModel(model);
-    } catch (Exception e) {
-        e.printStackTrace(); // Gledaj konzolu KLIJENTA (ne servera)
-        JOptionPane.showMessageDialog(this, "Greška: " + e.toString());
+    
+
+    public JLabel getjLabelUlogovani() {
+        return jLabelUlogovani;
     }
+
+    public void setjLabelUlogovani(JLabel jLabelUlogovani) {
+        this.jLabelUlogovani = jLabelUlogovani;
     }
+
+    public JTable getTabelaZivotinja() {
+        return tabelaZivotinja;
+    }
+    
+     
 }

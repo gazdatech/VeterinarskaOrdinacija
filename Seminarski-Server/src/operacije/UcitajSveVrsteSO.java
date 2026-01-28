@@ -4,33 +4,31 @@
  */
 package operacije;
 
-import domen.Zivotinja;
+import domen.VrstaZivotinje;
 import java.util.List;
 
 /**
  *
  * @author gazda
  */
-public class UcitajSveZivotinjeSO extends ApstraktnaGenerickaOperacija {
+public class UcitajSveVrsteSO extends ApstraktnaGenerickaOperacija {
 
-    private List<Zivotinja> lista;
+    List<VrstaZivotinje> listaVrste;
     
     @Override
     protected void preduslovi(Object objekat) throws Exception {
-        /////
+        //
     }
 
     @Override
     protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
-        lista = broker.getAll(objekat, " z JOIN vrstazivotinje v ON z.vrstaZivotinjeId = v.vrsta_id");
-        System.out.println("DEBUG: Broker vratio listu velicine: " + (lista == null ? "NULL" : lista.size()));
+        listaVrste = broker.getAll(objekat, null);
     }
 
-    public List<Zivotinja> getLista() {
-        return lista;
+    public List<VrstaZivotinje> getListaVrste() {
+        return listaVrste;
     }
-
-   
+    
     
     
 }

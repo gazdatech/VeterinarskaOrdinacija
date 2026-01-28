@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
 public class ModelTabeleZivotinja extends AbstractTableModel{
     
     private List<Zivotinja> lista;
-    private String[] kolone = {"ID", "Broj Cipa", "Vrsta", "Pol", "Tezina"};
+    private String[] kolone = {"ID","Ime", "Broj Cipa", "Vrsta", "Pol", "Tezina"};
     
     public ModelTabeleZivotinja(List<Zivotinja> lista) {
         this.lista = lista;
@@ -42,9 +42,10 @@ public class ModelTabeleZivotinja extends AbstractTableModel{
         switch (columnIndex) {
             case 0: return z.getZivotinjaId();
             case 1: return z.getIme(); // ili broj markice
-            case 2: return z.getVrstaZivotinje().getNazivVrste();
-            case 3: return z.getPol();
-            case 4: return z.getTezinaKg();
+            case 2: return z.getBrojCipa();
+            case 3: return z.getVrstaZivotinje().getNazivVrste();
+            case 4: return z.getPol();
+            case 5: return z.getTezinaKg();
             default: return "N/A";
         }
     }
