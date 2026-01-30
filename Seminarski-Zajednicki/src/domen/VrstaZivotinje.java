@@ -103,6 +103,12 @@ public class VrstaZivotinje implements ApstraktniDomenskiObjekat{
     public String vratiVrednostiZaIzmenu() {
         return String.format("naziv_vrste='%s'", nazivVrste);
     }
+
+    @Override
+    public String toString() {
+        return nazivVrste;
+    }
+    
     
     
 }

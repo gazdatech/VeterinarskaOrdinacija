@@ -30,7 +30,7 @@ public class Server extends Thread {
     public void run() {
         try {
             serverSoket = new ServerSocket(9000);
-            System.out.println("Server je pokrenut i ceka klijente...");
+            System.out.println("Server je pokrenut");
             while(!kraj) {
                 Socket s = serverSoket.accept();
                 // Umesto "Klijent je povezan", ispiši nešto neutralnije

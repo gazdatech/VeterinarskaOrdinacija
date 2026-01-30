@@ -5,32 +5,27 @@
 package operacije;
 
 import domen.Zivotinja;
-import java.util.List;
 
 /**
  *
  * @author gazda
  */
-public class UcitajSveZivotinjeSO extends ApstraktnaGenerickaOperacija {
+public class DodajZivotinjuSO extends ApstraktnaGenerickaOperacija{
 
-    private List<Zivotinja> lista;
-    
     @Override
     protected void preduslovi(Object objekat) throws Exception {
-        /////
+        if(objekat==null || !(objekat instanceof Zivotinja)) {
+            throw new Exception("Sistem nije mogao da doda pacijenta");
+        }
+        Zivotinja z = (Zivotinja) objekat;
+        if(z.getBrojCipa() == null || z.getVrstaZivotinje().getVrstaId() < 0) {
+            throw new Exception("Greska u parametrima");
+        }
     }
 
     @Override
     protected void izvrsiOperaciju(Object objekat, String kljuc) throws Exception {
-        lista = broker.getAll(objekat, " z JOIN vrstazivotinje v ON z.vrstaZivotinjeId = v.vrsta_id");
-       // System.out.println("DEBUG: Broker vratio listu velicine: " + (lista == null ? "NULL" : lista.size()));
+        broker.add((Zivotinja)objekat);
     }
-
-    public List<Zivotinja> getLista() {
-        return lista;
-    }
-
-   
-    
     
 }

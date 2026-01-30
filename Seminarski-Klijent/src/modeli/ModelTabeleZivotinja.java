@@ -54,4 +54,6 @@ public class ModelTabeleZivotinja extends AbstractTableModel{
         return lista.get(row);
     }
     
+    
+    
 }

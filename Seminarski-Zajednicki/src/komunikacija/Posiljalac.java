@@ -23,7 +23,7 @@ public class Posiljalac {
 
     public void posalji(Object object) throws IOException {
         izlaz.writeObject(object);
-        System.out.println("Poruka poslata: " + object);
+       // System.out.println("Poruka poslata: " + object);
         izlaz.flush();
     }
 

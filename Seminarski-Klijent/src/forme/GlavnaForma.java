@@ -9,7 +9,9 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import komunikacija.Komunikacija;
@@ -52,7 +54,7 @@ public class GlavnaForma extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuDodajPlan = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,6 +75,11 @@ public class GlavnaForma extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabelaZivotinja);
 
         btnDetalji.setText("Detalji");
+        btnDetalji.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetaljiActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Karton oporavka");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -103,7 +110,7 @@ public class GlavnaForma extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Treman");
+        jMenu2.setText("Tretman");
 
         jMenuItem3.setText("dodaj");
         jMenu2.add(jMenuItem3);
@@ -115,8 +122,8 @@ public class GlavnaForma extends javax.swing.JFrame {
 
         jMenu3.setText("Plan");
 
-        jMenuItem5.setText("dodaj");
-        jMenu3.add(jMenuItem5);
+        jMenuDodajPlan.setText("dodaj");
+        jMenu3.add(jMenuDodajPlan);
 
         jMenuItem6.setText("pregled");
         jMenu3.add(jMenuItem6);
@@ -136,10 +143,10 @@ public class GlavnaForma extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelUlogovani, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 302, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnIzmeni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -187,6 +194,10 @@ public class GlavnaForma extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnDetaljiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetaljiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDetaljiActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -199,10 +210,10 @@ public class GlavnaForma extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuDodajPlan;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem menuDodaj;
@@ -221,7 +232,25 @@ public class GlavnaForma extends javax.swing.JFrame {
 
     public JTable getTabelaZivotinja() {
         return tabelaZivotinja;
+    }  
+
+    public JButton getBtnDetalji() {
+        return btnDetalji;
     }
+
+    public JButton getBtnIzmeni() {
+        return btnIzmeni;
+    }
+
+    public JMenuItem getjMenuDodajPlan() {
+        return jMenuDodajPlan;
+    }
+
+    public void setjMenuDodajPlan(JMenuItem jMenuDodajPlan) {
+        this.jMenuDodajPlan = jMenuDodajPlan;
+    }
+    
+   
     
      
 }

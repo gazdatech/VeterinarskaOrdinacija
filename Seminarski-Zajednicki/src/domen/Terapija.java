@@ -143,6 +143,13 @@ public class Terapija implements ApstraktniDomenskiObjekat{
                 trajanje, 
                 ucestalost);
     }
+
+    @Override
+    public String toString() {
+        return nazivTerapije;
+    }
+    
+    
     
     
 }

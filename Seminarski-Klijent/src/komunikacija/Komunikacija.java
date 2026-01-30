@@ -4,6 +4,9 @@
  */
 package komunikacija;
 
+import domen.PlanRehabilitacije;
+import domen.Terapija;
+import domen.Tretman;
 import domen.Veterinar;
 import domen.VrstaZivotinje;
 import domen.Zivotinja;
@@ -44,25 +47,15 @@ public class Komunikacija {
     }
 
     public Veterinar login(String user, String password) throws Exception {
-        // 1. Kreiraš zahtev
         Zahtev zahtev = new Zahtev();
         Veterinar v = new Veterinar();
         v.setKorisnickoIme(user);
         v.setLozinka(password);
-        // 2. Postaviš operaciju (proveri da li se enum zove LOGIN)
         zahtev.setOperacija(Operacija.LOGIN); 
-
-        // 3. Ubaciš veterinara kao parametar zahteva
         zahtev.setParametar(v);
-
-        // 4. Šalješ ZAHTEV (ovo je ključno, pre si slao samo 'v')
         posiljalac.posalji(zahtev); 
-
-        // 5. Primis odgovor od servera
-        // Ovde moraš da primiš Odgovor jer tvoj server šalje Odgovor
         Odgovor odgovor = (Odgovor) primalac.primi();
 
-        // 6. Iz odgovora izvlačiš rezultat i kastuješ ga nazad u Veterinar
         return (Veterinar) odgovor.getOdgovor();
     }
 
@@ -79,6 +72,39 @@ public class Komunikacija {
         Odgovor odgovor = (Odgovor) primalac.primi();
         return (List<VrstaZivotinje>) odgovor.getOdgovor();
     }
+
+    public void dodajZivotinju(Zivotinja z) throws Exception {
+        Zahtev zahtev = new Zahtev(Operacija.DODAJ_ZIVOTINJU, z);
+        posiljalac.posalji(zahtev);
+        Odgovor odgovor = (Odgovor) primalac.primi();
+    }
+
+    public PlanRehabilitacije vratiPlanZaZivotinju(Zivotinja z) {
+       ///
+        return null;
+       ///
+    }
+
+   
+
+    public List<Terapija> vratiSveTerapije() throws Exception{
+       Zahtev zahtev = new Zahtev(Operacija.VRATI_TERAPIJE,null);
+       posiljalac.posalji(zahtev);
+       Odgovor odgovor = (Odgovor) primalac.primi();
+       return (List<Terapija>) odgovor.getOdgovor();
+    }
+
+    public List<Tretman> vratiSveTretmane() {
+        return null;
+    }
+
+    public void sacuvajPlan(PlanRehabilitacije plan) throws Exception {
+        Zahtev zahtev = new Zahtev(Operacija.SACUVAJ_PLAN,plan);
+        posiljalac.posalji(zahtev);
+        Odgovor odgovor = (Odgovor) primalac.primi();
+    }
+
+    
     
     
     

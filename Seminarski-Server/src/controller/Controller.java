@@ -4,11 +4,17 @@
  */
 package controller;
 
+import domen.PlanRehabilitacije;
+import domen.Terapija;
+import domen.Tretman;
 import domen.Veterinar;
 import domen.VrstaZivotinje;
 import domen.Zivotinja;
 import java.util.List;
+import operacije.DodajTretmanSO;
+import operacije.DodajZivotinjuSO;
 import operacije.LoginSO;
+import operacije.UcitajSveTerapijeSO;
 import operacije.UcitajSveVrsteSO;
 import operacije.UcitajSveZivotinjeSO;
 
@@ -32,7 +38,7 @@ public class Controller {
     public Veterinar login(Veterinar v) throws Exception {
         LoginSO lo = new LoginSO();
         lo.izvrsi(v, null);
-        System.out.println("Klasa kontroler : " + lo.getVeterinar());
+        System.out.println("Klasa kontroler : " + lo.getVeterinar().getIme());
         return lo.getVeterinar();
     }
     
@@ -47,6 +53,23 @@ public class Controller {
        so.izvrsi(new VrstaZivotinje(), null);
        return so.getListaVrste();
     }
+
+    public void dodajZivotinju(Zivotinja z) throws Exception {
+       DodajZivotinjuSO so = new DodajZivotinjuSO();
+       so.izvrsi(z, null);
+    }
+
+    public List<Terapija> vratiSveTerapije() throws Exception {
+        UcitajSveTerapijeSO so = new UcitajSveTerapijeSO();
+        so.izvrsi(new Terapija(), null);
+        return so.getLista();
+    }
+
+    public void sacuvajPlan(PlanRehabilitacije plan) {
+        
+    }
+
+    
     
 }
     

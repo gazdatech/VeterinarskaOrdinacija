@@ -5,6 +5,9 @@
 package niti;
 
 import controller.Controller;
+import domen.PlanRehabilitacije;
+import domen.Terapija;
+import domen.Tretman;
 import domen.Veterinar;
 import domen.VrstaZivotinje;
 import domen.Zivotinja;
@@ -59,6 +62,19 @@ public class ObradaKlijentskihZahteva extends Thread {
                         List<VrstaZivotinje> listaVrste = Controller.getInstance().vratiSveVrste();
                         odgovor.setOdgovor(listaVrste);
                         break;
+                    case DODAJ_ZIVOTINJU:
+                        Zivotinja z = (Zivotinja) zahtev.getParametar();
+                        Controller.getInstance().dodajZivotinju(z);
+                        odgovor.setOdgovor(z);
+                        System.out.println("SERVER PRIMIO: " + z.getIme() + ", " + z.getTezinaKg());
+                    case VRATI_TERAPIJE:
+                        List<Terapija> listaTerapija = Controller.getInstance().vratiSveTerapije();
+                        odgovor.setOdgovor(listaTerapija);
+                        break;
+                    case SACUVAJ_PLAN:
+                        PlanRehabilitacije plan = (PlanRehabilitacije) zahtev.getParametar();
+                        Controller.getInstance().sacuvajPlan(plan);
+                        odgovor.setOdgovor(plan);
                 }
                 // KLJUČNO: Samo jedno slanje na samom kraju switch-a
                 posiljalac.posalji(odgovor);

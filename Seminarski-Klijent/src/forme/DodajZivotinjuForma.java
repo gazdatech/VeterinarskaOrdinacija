@@ -5,7 +5,10 @@
 package forme;
 
 import domen.VrstaZivotinje;
+import enums.Pol;
+import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 /**
  *
@@ -56,7 +59,6 @@ public class DodajZivotinjuForma extends javax.swing.JFrame {
 
         jLabel2.setText("Pol:");
 
-        cmbPol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbPol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPolActionPerformed(evt);
@@ -68,8 +70,6 @@ public class DodajZivotinjuForma extends javax.swing.JFrame {
         jLabel4.setText("Tezina:");
 
         jLabel5.setText("Vrsta:");
-
-        cmbVrsta.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel6.setText("Broj cipa:");
 
@@ -154,12 +154,44 @@ public class DodajZivotinjuForma extends javax.swing.JFrame {
         this.cmbVrsta = cmbVrsta;
     }
 
-    public void setCmbPol(JComboBox<String> cmbPol) {
+    public void setCmbPol(JComboBox<Pol> cmbPol) {
         this.cmbPol = cmbPol;
     }
 
-    public JComboBox<String> getCmbPol() {
+    public JComboBox<Pol> getCmbPol() {
         return cmbPol;
+    }
+
+    public JTextField getTxtBrCipa() {
+        return txtBrCipa;
+    }
+
+    public void setTxtBrCipa(JTextField txtBrCipa) {
+        this.txtBrCipa = txtBrCipa;
+    }
+
+    public JTextField getTxtIme() {
+        return txtIme;
+    }
+
+    public void setTxtIme(JTextField txtIme) {
+        this.txtIme = txtIme;
+    }
+
+    public JTextField getTxtStarost() {
+        return txtStarost;
+    }
+
+    public void setTxtStarost(JTextField txtStarost) {
+        this.txtStarost = txtStarost;
+    }
+
+    public JTextField getTxtTezina() {
+        return txtTezina;
+    }
+
+    public void setTxtTezina(JTextField txtTezina) {
+        this.txtTezina = txtTezina;
     }
     
     
@@ -167,7 +199,7 @@ public class DodajZivotinjuForma extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
-    private javax.swing.JComboBox<String> cmbPol;
+    private javax.swing.JComboBox<Pol> cmbPol;
     private javax.swing.JComboBox cmbVrsta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -180,4 +212,10 @@ public class DodajZivotinjuForma extends javax.swing.JFrame {
     private javax.swing.JTextField txtStarost;
     private javax.swing.JTextField txtTezina;
     // End of variables declaration//GEN-END:variables
+
+    public void dodajAddActionListener(ActionListener actionListener) {
+        btnDodaj.addActionListener(actionListener);
+    }
+    
+    
 }

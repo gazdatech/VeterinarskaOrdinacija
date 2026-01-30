@@ -98,18 +98,17 @@ public class Tretman implements ApstraktniDomenskiObjekat{
     @Override
     public String vratiKoloneZaUbacivanje() {
         // Ovde ubacujemo i planId jer tretman ne može postojati bez plana
-        return "tretmanId, planId, terapijaId, datumPocetka, doza, napomena";
+        return "planId, terapijaId, datumPocetka, doza, napomena";
     }
 
     @Override
     public String vratiVrednostiZaUbacivanje() {
-        return String.format("%d, %d, %d, '%s', '%s', '%s'", 
-                tretmanId, 
-                planRehabilitacije.getPlanId(), 
-                terapija.getTerapijaId(), 
-                new java.sql.Date(datumPocetka.getTime()), 
-                doza, 
-                napomena);
+        return String.format("%d, %d, '%s', '%s', '%s'", 
+            planRehabilitacije.getPlanId(), 
+            terapija.getTerapijaId(), 
+            new java.sql.Date(datumPocetka.getTime()), 
+            doza, 
+            napomena);
     }
 
     @Override
@@ -142,9 +141,8 @@ public class Tretman implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vratiVrednostiZaIzmenu() {
-        return String.format("terapijaId=%d, datumPocetka='%s', doza='%s', napomena='%s'", 
-                terapija.getTerapijaId(), 
-                new java.sql.Date(datumPocetka.getTime()), 
+        return String.format("terapijaId=%d, doza='%s', napomena='%s'", 
+                terapija.getTerapijaId(),  
                 doza, 
                 napomena);
     }

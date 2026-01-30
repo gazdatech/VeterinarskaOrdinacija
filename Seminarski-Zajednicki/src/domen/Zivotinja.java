@@ -148,12 +148,12 @@ public class Zivotinja implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vratiVrednostiZaIzmenu() {
-        return "ime='" + ime + "', " +
-               "pol='" + pol.name() + "', " +
-               "starost=" + starost + ", " +
-               "tezinaKg=" + tezinaKg + ", " +
-               "brojCipa='" + brojCipa + "', " +
-               "vrstaZivotinjeId=" + vrstaZivotinje.getVrstaId();
+         return "'" + ime + "', " +
+               "'" + pol + "', " +
+               starost + ", " +
+               tezinaKg + ", " +
+               "'" + brojCipa + "', " +
+               vrstaZivotinje.getVrstaId(); // Pazi na redosled kolona u tabeli!
     }
     
     

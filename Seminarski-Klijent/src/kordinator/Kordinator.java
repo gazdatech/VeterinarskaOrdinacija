@@ -5,12 +5,17 @@
 package kordinator;
 
 import domen.Veterinar;
+import domen.Zivotinja;
+import forme.DetaljiZivotinjeForma;
 import forme.DodajZivotinjuForma;
 import forme.GlavnaForma;
 import forme.LoginForm;
+import forme.NoviPlanRehForma;
+import kontroleri.DetaljiZivotinjeController;
 import kontroleri.DodajZivotinjuController;
 import kontroleri.GlavnaFormaController;
 import kontroleri.LoginController;
+import kontroleri.PlanController;
 
 /**
  *
@@ -19,9 +24,12 @@ import kontroleri.LoginController;
 public class Kordinator {
     private static Kordinator instance;
     private Veterinar ulogovani;
+    private Zivotinja zivotinja;
     private LoginController loginController;
     private GlavnaFormaController gfController;
     private DodajZivotinjuController dzController;
+    private DetaljiZivotinjeController detaljiController;
+    private PlanController planController;
     private Kordinator() {
         
     }
@@ -47,6 +55,16 @@ public class Kordinator {
         this.ulogovani = ulogovani;
     }
 
+    public Zivotinja getZivotinja() {
+        return zivotinja;
+    }
+
+    public void setZivotinja(Zivotinja zivotinja) {
+        this.zivotinja = zivotinja;
+    }
+    
+    
+
     public void otvoriGlavnuFormu() throws Exception {
         gfController = new GlavnaFormaController(new GlavnaForma());
         gfController.otvoriFormu();
@@ -55,6 +73,21 @@ public class Kordinator {
     public void otvoriDodajZivotinjuFormu() throws Exception {
         dzController = new DodajZivotinjuController(new DodajZivotinjuForma());
         dzController.otvoriFormu();
+    }
+
+    public void osveziTabeluZivotinja() throws Exception {
+        gfController.pripremiFormu();
+    }
+    
+    public void otvoriDetaljiZivotinjeFormu(Zivotinja z) throws Exception {
+        detaljiController = new DetaljiZivotinjeController(new DetaljiZivotinjeForma());
+        detaljiController.otvoriFormu();
+    }
+
+    public void otvoriNoviPlanFormu(Zivotinja z) throws Exception {
+       planController = new PlanController(new NoviPlanRehForma(gfController.getGf(), true));
+       planController.otvoriFormu(z);
+       
     }
     
     
