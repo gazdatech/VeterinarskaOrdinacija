@@ -116,7 +116,8 @@ public class Veterinar implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vratiKoloneZaUbacivanje() {
-        return "ime, prezime, specijalizacija, stepenId";
+        // Mora se poklapati sa brojem vrednosti dole
+        return "ime, prezime, stepenId"; 
     }
 
     @Override
@@ -139,13 +140,13 @@ public class Veterinar implements ApstraktniDomenskiObjekat{
         v.setIme(rs.getString("ime"));
         v.setPrezime(rs.getString("prezime"));
 
-        // OVE LINIJE TI NEDOSTAJU:
-        // Proveri da li se u bazi kolone zovu bas ovako (mozda je username/password?)
+        // OVE LINIJE SU KLJUČNE ZA LOGIN:
+        // Proveri u bazi da li se kolone zovu tacno ovako:
         v.setKorisnickoIme(rs.getString("korisnickoIme")); 
         v.setLozinka(rs.getString("lozinka"));
 
         StepenObrazovanja so = new StepenObrazovanja();
-        so.setStepenId(rs.getInt("stepenId")); // Ovo smo vec popravili
+        so.setStepenId(rs.getInt("stepenId")); 
         v.setStepenObrazovanja(so);
 
         return v;

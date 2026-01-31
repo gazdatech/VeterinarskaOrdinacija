@@ -35,8 +35,12 @@ public class DbRepositoryGeneric implements DbRepository<ApstraktniDomenskiObjek
 
     @Override
     public void add(ApstraktniDomenskiObjekat param) throws Exception {
-        String upit = "INSERT INTO " + param.vratiNazivTabele() + "(" + param.vratiKoloneZaUbacivanje() + ")" + "VALUES (" + param.vratiVrednostiZaIzmenu() + " )";
-        System.out.println(upit);
+        // Koristimo vratiVrednostiZaUbacivanje() umesto vratiVrednostiZaIzmenu()
+        String upit = "INSERT INTO " + param.vratiNazivTabele() + " (" + param.vratiKoloneZaUbacivanje() + ") " +
+                      "VALUES (" + param.vratiVrednostiZaUbacivanje() + ")";
+
+        System.out.println("Izvrsavam upit: " + upit);
+
         Statement st = DbConnectionFactory.getInstance().getConnection().createStatement();
         st.executeUpdate(upit);
         st.close();

@@ -25,7 +25,7 @@ public class PlanRehabilitacije implements ApstraktniDomenskiObjekat{
     private List<Tretman> tretmani;
 
     public PlanRehabilitacije() {
-        
+        this.status = StatusPlanaEnum.U_TOKU;
     }
 
     public PlanRehabilitacije(int planId, Date datumPocetka, Date datumZavrsetka, String opisPlana, Veterinar veterinar, Zivotinja zivotinja, StatusPlanaEnum status, List<Tretman> tretmani) {
@@ -129,13 +129,19 @@ public class PlanRehabilitacije implements ApstraktniDomenskiObjekat{
 
     @Override
     public String vratiVrednostiZaUbacivanje() {
-        return String.format("'%s', '%s', '%s', %d, %d, '%s'", 
-                new java.sql.Date(datumPocetka.getTime()), 
-                new java.sql.Date(datumZavrsetka.getTime()), 
-                opisPlana, 
-                veterinar.getVeterinarId(), 
-                zivotinja.getZivotinjaId(), 
-                status.toString());
+ 
+        long time = (this.datumPocetka != null) ? this.datumPocetka.getTime() : System.currentTimeMillis();
+        java.sql.Date sqlDatum = new java.sql.Date(time);
+
+        int vId = (this.veterinar != null) ? this.veterinar.getVeterinarId() : 0;
+        int zId = (this.zivotinja != null) ? this.zivotinja.getZivotinjaId() : 0;
+        
+        String statusString = (status != null) ? status.toString() : "U_TOKU";
+
+        return String.format("'%s', %s, '%s', %d, %d, '%s'", 
+                sqlDatum, 
+                (datumZavrsetka != null) ? "'" + new java.sql.Date(datumZavrsetka.getTime()) + "'" : "NULL", 
+                opisPlana, vId, zId, statusString);
     }
 
     @Override

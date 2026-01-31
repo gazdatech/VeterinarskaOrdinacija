@@ -14,6 +14,7 @@ import java.util.List;
 import operacije.DodajTretmanSO;
 import operacije.DodajZivotinjuSO;
 import operacije.LoginSO;
+import operacije.SacuvajPlanSO;
 import operacije.UcitajSveTerapijeSO;
 import operacije.UcitajSveVrsteSO;
 import operacije.UcitajSveZivotinjeSO;
@@ -38,7 +39,7 @@ public class Controller {
     public Veterinar login(Veterinar v) throws Exception {
         LoginSO lo = new LoginSO();
         lo.izvrsi(v, null);
-        System.out.println("Klasa kontroler : " + lo.getVeterinar().getIme());
+        System.out.println("Klasa kontroler veterinar sa id : " + lo.getVeterinar().getVeterinarId());
         return lo.getVeterinar();
     }
     
@@ -65,8 +66,9 @@ public class Controller {
         return so.getLista();
     }
 
-    public void sacuvajPlan(PlanRehabilitacije plan) {
-        
+    public void sacuvajPlan(PlanRehabilitacije plan) throws Exception {
+        SacuvajPlanSO so = new SacuvajPlanSO();
+        so.izvrsi(plan, null);
     }
 
     

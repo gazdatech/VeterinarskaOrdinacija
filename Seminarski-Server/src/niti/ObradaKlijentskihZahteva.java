@@ -73,8 +73,10 @@ public class ObradaKlijentskihZahteva extends Thread {
                         break;
                     case SACUVAJ_PLAN:
                         PlanRehabilitacije plan = (PlanRehabilitacije) zahtev.getParametar();
+                        System.out.println("SERVER PRIMIO OBJEKAT: " + plan);
                         Controller.getInstance().sacuvajPlan(plan);
                         odgovor.setOdgovor(plan);
+                        break;
                 }
                 // KLJUČNO: Samo jedno slanje na samom kraju switch-a
                 posiljalac.posalji(odgovor);

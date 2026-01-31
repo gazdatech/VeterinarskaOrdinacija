@@ -8,6 +8,7 @@ import com.sun.java.accessibility.util.AWTEventMonitor;
 import domen.PlanRehabilitacije;
 import domen.Terapija;
 import domen.Tretman;
+import domen.Veterinar;
 import domen.Zivotinja;
 import forme.DetaljiZivotinjeForma;
 import forme.NoviPlanRehForma;
@@ -55,26 +56,36 @@ public class PlanController {
           }
 
           private void sacuvaj(ActionEvent e) {
-              try {
-                  PlanRehabilitacije plan = new PlanRehabilitacije();
-                  plan.setZivotinja(selektovanaZivotinja);
-                  plan.setDatumPocetka(new Date());
-                  plan.setOpisPlana(noviF.getAreaNap().getText());
-                  plan.setVeterinar(Kordinator.getInstance().getUlogovani());
-                  
-                  ModelTabeleTretman model = (ModelTabeleTretman) noviF.getTabelaTretmana().getModel();
-                  plan.setTretmani(model.getLista());
-                  
-                  Komunikacija.getInstance().sacuvajPlan(plan);
-                  
-            
-                JOptionPane.showMessageDialog(noviF, "Sistem je uspešno zapamtio plan i sve tretmane!");
-                noviF.dispose();
-                  
-              }catch (Exception ex) {
-                JOptionPane.showMessageDialog(noviF, "Greška pri čuvanju: " + ex.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
+                try {
+                    PlanRehabilitacije plan = new PlanRehabilitacije();
+
+                    // Uzmi ulogovanog veterinara
+                    Veterinar ulogovani = Kordinator.getInstance().getUlogovani();
+
+                    // TEST: Proveri u konzoli klijenta pre slanja
+                    if (ulogovani == null) {
+                        JOptionPane.showMessageDialog(noviF, "Greška: Sesija je istekla ili veterinar nije ulogovan!");
+                        return;
+                    }
+                    System.out.println("Klijent salje plan. Veterinar ID: " + ulogovani.getVeterinarId());
+
+                    plan.setVeterinar(ulogovani); // Ovo postavlja ID koji ti fali
+                    plan.setZivotinja(selektovanaZivotinja);
+                    plan.setDatumPocetka(new Date());
+                    plan.setOpisPlana(noviF.getAreaNap().getText());
+
+                    ModelTabeleTretman model = (ModelTabeleTretman) noviF.getTabelaTretmana().getModel();
+                    plan.setTretmani(model.getLista());
+
+                    Komunikacija.getInstance().sacuvajPlan(plan);
+
+                    JOptionPane.showMessageDialog(noviF, "Sistem je uspešno zapamtio plan!");
+                    noviF.dispose();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(noviF, "Greska: " + ex.getMessage());
+                }
             }
-          }
       });
       
       noviF.getBtnDodajT().addActionListener(new ActionListener() {
